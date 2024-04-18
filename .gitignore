@@ -1,0 +1,34 @@
+# Carpeta bin generada por la compilación
+bin/
+# Carpeta obj generada por la compilación
+obj/
+# Carpeta .vs generada por Visual Studio
+.vs/
+# Carpeta bin-debug generada por Visual Studio
+bin-debug/
+# Carpeta .idea generada por JetBrains Rider
+.idea/
+# Carpeta .vscode generada por Visual Studio Code
+.vscode/
+# Archivos de configuración sensibles
+appsettings.json
+appsettings.Development.json
+# Archivos de registro y de caché
+*.log
+*.cache
+# Archivos de usuario específicos del IDE
+*.suo
+*.user
+*.sln.docstates
+# Carpeta Migrations de Entity Framework Core
+Migrations/
+web.config
+WSSistemaUniversitario.sln
+WSSistemaUniversitario.http
+WSSistemaUniversitario.csproj
+.config/
+Properties/
+/README.md
+/web.config
+/WSSistemaUniversitario.http
+DbSistemauniversitarioContext.cs
