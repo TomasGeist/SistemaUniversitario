@@ -1,5 +1,9 @@
 using Microsoft.EntityFrameworkCore;
+using WSSistemaUniversitario.DTOs;
 using WSSistemaUniversitario.Models;
+using WSSistemaUniversitario.Models.Response;
+using WSSistemaUniversitario.Services;
+using WSSistemaUniversitario.Tools;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -13,6 +17,15 @@ builder.Services.AddDbContext<DbSistemauniversitarioContext>(options =>
 {
     options.UseSqlServer(builder.Configuration.GetConnectionString("DbUniversitario"));
 });
+builder.Services.AddScoped<AlumnoService>();
+builder.Services.AddScoped<Respuesta>();
+
+//DTOS
+builder.Services.AddScoped<CambioDeCondicionAlumnoDTO>();
+
+//TOOLS
+builder.Services.AddSingleton<Verificaciones>();
+
 
 var app = builder.Build();
 
