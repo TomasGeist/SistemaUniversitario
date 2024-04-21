@@ -38,7 +38,33 @@ namespace WSSistemaUniversitario.Services
             }
         }
 
-        public Respuesta EliminarAlumno() { return _resp; }
+        public Respuesta EliminarAlumno(int id)
+        {
+            try
+            {
+                var alumno = _db.Alumno.FirstOrDefault(w => w.IdAlumno == id);
+
+                if (alumno != null) {
+                    _db.Alumno.Remove(alumno);
+                    _db.SaveChanges();
+                    _resp.descripcion = "Alumno removido con éxito";
+                    _resp.codigo = 1;
+                    return _resp;
+                }
+                else
+                {
+                    _resp.descripcion = "No se encontró el alumno";
+                    return _resp;
+                }
+                ;
+            }
+            catch (Exception ex)
+            {
+
+            }
+            return _resp;
+        
+        }
         public Respuesta EditarAlumno() { return _resp;  }
         public Respuesta EditarCondicionAlumno(CambioDeCondicionAlumnoDTO dto) {
             var alumno = _db.Alumno.FirstOrDefault(a => a.IdAlumno == dto.idAlumno);

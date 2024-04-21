@@ -29,6 +29,16 @@ namespace WSSistemaUniversitario.Controllers.Alumnos
         }
 
 
+        [HttpDelete]
+
+        public IActionResult Delete([FromBody] int id)
+        {
+            var rsp = _alumno.EliminarAlumno(id);
+            return (rsp.codigo == 0) ? BadRequest(rsp) : Ok(rsp);
+
+        }
+
+
         [HttpPut("/condicion")]
 
         public IActionResult CambiarCondicion([FromBody] CambioDeCondicionAlumnoDTO _dtoCambioCondicion)
@@ -38,8 +48,6 @@ namespace WSSistemaUniversitario.Controllers.Alumnos
                 var rsp = _alumno.EditarCondicionAlumno(_dtoCambioCondicion);
                 return (rsp.codigo == 0) ? BadRequest(rsp) : Ok(rsp);
             
-
-         
         }
     }
 }
