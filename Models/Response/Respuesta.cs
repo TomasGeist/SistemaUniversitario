@@ -1,4 +1,6 @@
-﻿namespace WSSistemaUniversitario.Models.Response
+﻿using System.Text.Json.Serialization;
+
+namespace WSSistemaUniversitario.Models.Response
 {
     public class Respuesta
     {
@@ -11,6 +13,6 @@
             codigo = 0;
             descripcion = null;
             data = null;
-        }
+        }   
     }
 }

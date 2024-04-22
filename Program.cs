@@ -19,13 +19,14 @@ builder.Services.AddDbContext<DbSistemauniversitarioContext>(options =>
 });
 builder.Services.AddScoped<AlumnoService>();
 builder.Services.AddScoped<Respuesta>();
+builder.Services.AddSingleton<RespuestasUtiles>();
 
 //DTOS
 builder.Services.AddScoped<CambioDeCondicionAlumnoDTO>();
 
 //TOOLS
 builder.Services.AddSingleton<Verificaciones>();
-
+builder.Services.AddScoped<BuscarAlumno>();
 
 var app = builder.Build();
 

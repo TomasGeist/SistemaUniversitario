@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using WSSistemaUniversitario.DTOs;
 using WSSistemaUniversitario.Models;
+using WSSistemaUniversitario.Models.Response;
 using WSSistemaUniversitario.Services;
 using WSSistemaUniversitario.Tools;
 
@@ -11,13 +12,11 @@ namespace WSSistemaUniversitario.Controllers.Alumnos
     public class AlumnoController : Controller
     {
         private readonly AlumnoService _alumno;
-        private readonly CambioDeCondicionAlumnoDTO _dtoCambioCondicion;
         private readonly Verificaciones _verificaciones;
 
         public AlumnoController(AlumnoService alumno, CambioDeCondicionAlumnoDTO dtoCambioCondicion, Verificaciones verificaciones)
         {
             _alumno = alumno;
-            _dtoCambioCondicion = dtoCambioCondicion;
             _verificaciones = verificaciones;
         }
 
@@ -38,16 +37,59 @@ namespace WSSistemaUniversitario.Controllers.Alumnos
 
         }
 
+        [HttpPut]
+
+        public IActionResult Edit([FromBody] EditarAlumnoDTO alumno)
+        {
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(ModelState);
+            }
+            else
+            {
+                var rsp = _alumno.EditarAlumno(alumno);
+                return (rsp.codigo == 0) ? BadRequest(rsp) : Ok(rsp);
+            }
+            
+        }
+
 
         [HttpPut("/condicion")]
 
         public IActionResult CambiarCondicion([FromBody] CambioDeCondicionAlumnoDTO _dtoCambioCondicion)
         {
-           
-            
                 var rsp = _alumno.EditarCondicionAlumno(_dtoCambioCondicion);
                 return (rsp.codigo == 0) ? BadRequest(rsp) : Ok(rsp);
-            
+        }
+
+        [HttpPost("/confirmarpago")]
+        public IActionResult ConfirmarPago([FromBody] int id)
+        {
+            var rsp = _alumno.GenerarPago(id);
+            if (rsp.codigo == 0)
+            {
+                return BadRequest(rsp);
+            }
+            else
+            {
+                ActualizarSaldo(id, rsp);
+                return Ok(rsp);
+            }
+        }
+
+        [HttpPut("/actualizarsaldo")]
+
+        private IActionResult ActualizarSaldo(int id, Respuesta respuesta)
+        {
+            if (respuesta.codigo == 0)
+            {
+                return BadRequest(respuesta);
+            }
+            else
+            {
+                var rsp = _alumno.ActualizarSaldo(id);
+                return (rsp.codigo == 0) ? BadRequest(rsp) : Ok(rsp);
+            }          
         }
     }
 }

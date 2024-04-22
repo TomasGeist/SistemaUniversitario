@@ -2,6 +2,7 @@
 using WSSistemaUniversitario.DTOs;
 using WSSistemaUniversitario.Models;
 using WSSistemaUniversitario.Models.Response;
+using WSSistemaUniversitario.Tools;
 
 namespace WSSistemaUniversitario.Services
 {
@@ -9,10 +10,14 @@ namespace WSSistemaUniversitario.Services
     {
         private readonly DbSistemauniversitarioContext _db;
         private Respuesta _resp;
-        public AlumnoService(DbSistemauniversitarioContext db, Respuesta resp)
+        private readonly BuscarAlumno _buscarAlumno;
+        private readonly RespuestasUtiles _respuestasUtiles;
+        public AlumnoService(DbSistemauniversitarioContext db, Respuesta resp, BuscarAlumno buscar, RespuestasUtiles respUtiles)
         {
             _db = db;
             _resp = resp;
+            _buscarAlumno = buscar;
+            _respuestasUtiles = respUtiles;
         }
 
         public Respuesta ObtenerAlumnos()
@@ -42,7 +47,7 @@ namespace WSSistemaUniversitario.Services
         {
             try
             {
-                var alumno = _db.Alumno.FirstOrDefault(w => w.IdAlumno == id);
+                var alumno = _buscarAlumno.BuscarUnAlumno(id); ;
 
                 if (alumno != null) {
                     _db.Alumno.Remove(alumno);
@@ -53,30 +58,28 @@ namespace WSSistemaUniversitario.Services
                 }
                 else
                 {
-                    _resp.descripcion = "No se encontró el alumno";
+                    _resp.descripcion =     _respuestasUtiles.AlumnoNoEncontrado;
                     return _resp;
                 }
                 ;
             }
             catch (Exception ex)
             {
-
+                _resp.descripcion= ex.Message;
+                return _resp;
             }
-            return _resp;
         
         }
-        public Respuesta EditarAlumno(int id, Alumno model) {
-            var alumno = _db.Alumno.FirstOrDefault(w=> w.IdAlumno == id);
+        public Respuesta EditarAlumno(EditarAlumnoDTO model) {
+            var alumno = _buscarAlumno.BuscarUnAlumno(model.Id);
             if (alumno != null)
             {
                 try
                 {
-                    alumno.Apellido = model.Apellido;
-                    alumno.AlumnoMateria = model.AlumnoMateria; 
-                    alumno.IdCarrera = model.IdCarrera;
                     alumno.Nombre = model.Nombre;
+                    alumno.Apellido = model.Apellido;
+                    alumno.IdCarrera = model.IdCarrera;
                     alumno.Condicion = model.Condicion;
-                    alumno.Password = model.Password;
                     _db.SaveChanges();
 
                     _resp.codigo = 1;
@@ -85,21 +88,18 @@ namespace WSSistemaUniversitario.Services
 
                 } catch(Exception ex)
                 {
-
+                    _resp.descripcion = ex.Message;
+                    return (_resp);
                 }
             }
             else
             {
-                _resp.descripcion = "No se encontró el alumno";
+                _resp.descripcion = _respuestasUtiles.AlumnoNoEncontrado;
                 return (_resp);
             }
-
-
-
-            return _resp; 
         }
         public Respuesta EditarCondicionAlumno(CambioDeCondicionAlumnoDTO dto) {
-            var alumno = _db.Alumno.FirstOrDefault(a => a.IdAlumno == dto.idAlumno);
+            var alumno = _buscarAlumno.BuscarUnAlumno(dto.idAlumno);
             if (alumno != null)
             {
                     try
@@ -127,11 +127,65 @@ namespace WSSistemaUniversitario.Services
                     }
                 }
             else {
-                    _resp.descripcion = "No se encontró ningun alumno";
-                    return _resp;
+                    _resp.descripcion = _respuestasUtiles.AlumnoNoEncontrado;
+                return _resp;
                 }
         }
-        public Respuesta RealizarPago() { return _resp; }
+        public Respuesta GenerarPago(int id) {
+            var alumno = _buscarAlumno.BuscarUnAlumno(id);
+            var cuota = _db.Cuota.FirstOrDefault(c => c.IdCarrera == alumno.IdCarrera);
+            if (alumno != null)
+            {
+                var pago = new Pago();
+                if (cuota != null)
+                {
+                    pago.IdAlumno = id;
+                    pago.IdCuota = cuota.IdCuota;
+                    _db.Pago.Add(pago);
+                    _db.SaveChanges();
+                    _resp.descripcion = "Pago Confirmado";
+                    _resp.codigo = 1;
+                    return _resp;
+                }
+                else
+                {
+                    _resp.descripcion = "Hubo un error con la cuota";
+                    return _resp;
+                }
+            }
+            else
+            {
+                _resp.descripcion = _respuestasUtiles.AlumnoNoEncontrado;
+                return _resp;
+            }  
+        }
 
+
+        public Respuesta ActualizarSaldo(int id)
+        {
+            var alumno = _buscarAlumno.BuscarUnAlumno(id);
+            var cuota = _db.Cuota.FirstOrDefault(c => c.IdCarrera == alumno.IdCarrera);
+            if (alumno.Saldo < 0)
+            {
+                try
+                {
+                    alumno.Saldo += cuota.Costo;
+                    _db.SaveChanges();
+                    _resp.descripcion = "Saldo Actualizado";
+                    _resp.codigo = 1;
+                    return _resp;
+                }
+                catch (Exception ex)
+                {
+                    _resp.descripcion = ex.Message;
+                    return _resp;
+                }
+            }
+            else {
+                _resp.descripcion = "Saldo Actualizado";
+                _resp.codigo = 1;
+                return _resp;
+            }
+        }
     }
 }
