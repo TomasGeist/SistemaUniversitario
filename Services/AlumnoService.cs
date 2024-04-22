@@ -65,7 +65,39 @@ namespace WSSistemaUniversitario.Services
             return _resp;
         
         }
-        public Respuesta EditarAlumno() { return _resp;  }
+        public Respuesta EditarAlumno(int id, Alumno model) {
+            var alumno = _db.Alumno.FirstOrDefault(w=> w.IdAlumno == id);
+            if (alumno != null)
+            {
+                try
+                {
+                    alumno.Apellido = model.Apellido;
+                    alumno.AlumnoMateria = model.AlumnoMateria; 
+                    alumno.IdCarrera = model.IdCarrera;
+                    alumno.Nombre = model.Nombre;
+                    alumno.Condicion = model.Condicion;
+                    alumno.Password = model.Password;
+                    _db.SaveChanges();
+
+                    _resp.codigo = 1;
+                    _resp.descripcion = "Alumno editado con éxito";
+                    return (_resp);
+
+                } catch(Exception ex)
+                {
+
+                }
+            }
+            else
+            {
+                _resp.descripcion = "No se encontró el alumno";
+                return (_resp);
+            }
+
+
+
+            return _resp; 
+        }
         public Respuesta EditarCondicionAlumno(CambioDeCondicionAlumnoDTO dto) {
             var alumno = _db.Alumno.FirstOrDefault(a => a.IdAlumno == dto.idAlumno);
             if (alumno != null)
