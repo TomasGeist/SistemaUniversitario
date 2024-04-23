@@ -1,4 +1,5 @@
 using Microsoft.EntityFrameworkCore;
+using QuestPDF.Infrastructure;
 using WSSistemaUniversitario.DTOs;
 using WSSistemaUniversitario.Models;
 using WSSistemaUniversitario.Models.Response;
@@ -8,6 +9,8 @@ using WSSistemaUniversitario.Tools;
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
+
+QuestPDF.Settings.License = LicenseType.Community;
 
 builder.Services.AddControllers();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
