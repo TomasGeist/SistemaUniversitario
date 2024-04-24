@@ -1,0 +1,34 @@
+﻿using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Mvc;
+using WSSistemaUniversitario.DTOs;
+using WSSistemaUniversitario.Services;
+
+namespace WSSistemaUniversitario.Controllers
+{
+    [Route("api/[controller]")]
+    [ApiController]
+
+   
+    public class EnviarEmailController : ControllerBase
+    {
+        private readonly EmailService _email;
+        private readonly PdfPagoService _pdfPagoService;
+
+        public EnviarEmailController(EmailService email, PdfPagoService pdfPagoService)
+        {
+            _email = email;
+            _pdfPagoService = pdfPagoService;
+        }
+
+        [HttpPost]
+
+        public IActionResult EnviarCorreo(EmailDTO correo, int id)
+        {
+            correo.IdAlumno = id;
+            var stream = _pdfPagoService.generarPdf(correo.IdAlumno);
+            _email.EnviarEmail(correo, stream);
+            return Ok();
+        }
+
+    }
+}

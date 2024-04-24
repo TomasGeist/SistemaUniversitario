@@ -13,11 +13,12 @@ namespace WSSistemaUniversitario.Controllers.Alumnos
     {
         private readonly AlumnoService _alumno;
         private readonly Verificaciones _verificaciones;
-
-        public AlumnoController(AlumnoService alumno, CambioDeCondicionAlumnoDTO dtoCambioCondicion, Verificaciones verificaciones)
+        private readonly EnviarEmailController _enviarEmail;
+        public AlumnoController(AlumnoService alumno, CambioDeCondicionAlumnoDTO dtoCambioCondicion, Verificaciones verificaciones, EnviarEmailController enviarEmail)
         {
             _alumno = alumno;
             _verificaciones = verificaciones;
+            _enviarEmail = enviarEmail;
         }
 
         [HttpGet]
@@ -65,6 +66,7 @@ namespace WSSistemaUniversitario.Controllers.Alumnos
         [HttpPost("/confirmarpago")]
         public IActionResult ConfirmarPago([FromBody] int id)
         {
+            
             var rsp = _alumno.GenerarPago(id);
             if (rsp.codigo == 0)
             {
@@ -73,6 +75,7 @@ namespace WSSistemaUniversitario.Controllers.Alumnos
             else
             {
                 ActualizarSaldo(id, rsp);
+                _enviarEmail.EnviarCorreo(new EmailDTO(), id);
                 return Ok(rsp);
             }
         }

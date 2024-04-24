@@ -1,5 +1,6 @@
 using Microsoft.EntityFrameworkCore;
 using QuestPDF.Infrastructure;
+using WSSistemaUniversitario.Controllers;
 using WSSistemaUniversitario.DTOs;
 using WSSistemaUniversitario.Models;
 using WSSistemaUniversitario.Models.Response;
@@ -22,13 +23,15 @@ builder.Services.AddDbContext<DbSistemauniversitarioContext>(options =>
 });
 builder.Services.AddScoped<AlumnoService>();
 builder.Services.AddScoped<Respuesta>();
-builder.Services.AddSingleton<RespuestasUtiles>();
-
+builder.Services.AddScoped<RespuestasUtiles>();
+builder.Services.AddScoped<PdfPagoService>();
+builder.Services.AddScoped<EmailService>();
+builder.Services.AddScoped<EnviarEmailController>();
 //DTOS
 builder.Services.AddScoped<CambioDeCondicionAlumnoDTO>();
 
 //TOOLS
-builder.Services.AddSingleton<Verificaciones>();
+builder.Services.AddScoped<Verificaciones>();
 builder.Services.AddScoped<BuscarAlumno>();
 
 var app = builder.Build();
