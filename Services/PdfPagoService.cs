@@ -6,7 +6,7 @@ using WSSistemaUniversitario.Models;
 
 namespace WSSistemaUniversitario.Services
 {
-    public class PdfPagoService
+    public class PdfPagoService : IPdfPagoService
     {
         private readonly DbSistemauniversitarioContext _db;
         public PdfPagoService(DbSistemauniversitarioContext db)

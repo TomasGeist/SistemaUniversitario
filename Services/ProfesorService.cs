@@ -1,9 +1,10 @@
 ﻿using WSSistemaUniversitario.Models;
+using WSSistemaUniversitario.Services;
 
 namespace WSSistemaUniversitario.Tools
 {
-    public class ProfesorService
+    public class ProfesorService : IProfesorService
     {
-        
+       
     }
 }

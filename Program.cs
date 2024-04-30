@@ -21,11 +21,11 @@ builder.Services.AddDbContext<DbSistemauniversitarioContext>(options =>
 {
     options.UseSqlServer(builder.Configuration.GetConnectionString("DbUniversitario"));
 });
-builder.Services.AddScoped<AlumnoService>();
 builder.Services.AddScoped<Respuesta>();
 builder.Services.AddScoped<RespuestasUtiles>();
-builder.Services.AddScoped<PdfPagoService>();
-builder.Services.AddScoped<EmailService>();
+builder.Services.AddScoped<IPdfPagoService, PdfPagoService>();
+builder.Services.AddScoped<IEmailService, EmailService>();
+builder.Services.AddScoped<IAlumnoService, AlumnoService>();
 builder.Services.AddScoped<EnviarEmailController>();
 //DTOS
 builder.Services.AddScoped<CambioDeCondicionAlumnoDTO>();

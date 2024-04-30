@@ -6,7 +6,7 @@ using WSSistemaUniversitario.Tools;
 
 namespace WSSistemaUniversitario.Services
 {
-    public class AlumnoService
+    public class AlumnoService : IAlumnoService
     {
         private readonly DbSistemauniversitarioContext _db;
         private Respuesta _resp;
@@ -186,6 +186,24 @@ namespace WSSistemaUniversitario.Services
                 _resp.codigo = 1;
                 return _resp;
             }
+        }
+
+        public Respuesta CambiarCorreo(int id, string nuevocorreo)
+        {
+            var alumno = _buscarAlumno.BuscarUnAlumno(id);
+            try
+            {
+                alumno.Correo = nuevocorreo;
+                _db.SaveChanges();
+                _resp.codigo = 1;
+                _resp.descripcion = "Correo Actualizado";
+                return (_resp);
+            } catch (Exception ex)
+            {
+                _resp.descripcion= ex.Message;
+                return _resp;
+            }
+
         }
     }
 }
