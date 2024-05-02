@@ -58,7 +58,7 @@ namespace WSSistemaUniversitario.Services
                 }
                 else
                 {
-                    _resp.descripcion =     _respuestasUtiles.AlumnoNoEncontrado;
+                    _resp.descripcion = _respuestasUtiles.AlumnoNoEncontrado;
                     return _resp;
                 }
                 ;

@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using WSSistemaUniversitario.Models;
+using WSSistemaUniversitario.Models.Response;
 
 namespace WSSistemaUniversitario.Controllers.Profesor
 {
@@ -9,28 +10,21 @@ namespace WSSistemaUniversitario.Controllers.Profesor
     public class ProfesorController : ControllerBase
     {
     private readonly DbSistemauniversitarioContext _db;
-        public ProfesorController(DbSistemauniversitarioContext db)
+
+        private Respuesta _resp;
+
+        public ProfesorController(DbSistemauniversitarioContext db, Respuesta resp)
         {
             _db = db;
+            _resp = resp;
         }
 
+        [HttpGet]
 
-
-        //[HttpGet]
-
-        //public async Task<IActionResult> GetProfesor()
-        //{
-        //    var lst = new List<T>
-
-        //    try
-        //    {
-                
-
-        //    }catch (Exception ex)
-        //    {
-
-        //    }
-        //}
+        public async Task<Respuesta> obtenerProfesores()
+        {
+            return (_resp);
+        }
 
     }
 }

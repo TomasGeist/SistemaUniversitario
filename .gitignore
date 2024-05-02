@@ -28,7 +28,6 @@ WSSistemaUniversitario.http
 WSSistemaUniversitario.csproj
 .config/
 Properties/
-/README.md
 /web.config
 /WSSistemaUniversitario.http
 DbSistemauniversitarioContext.cs
