@@ -12,12 +12,16 @@ Se desarrolla un sistema que permite gestionar una Universidad. Va a contemplar 
 ## Bibliotecas externas utilizadas
 <details>
 <summary>MimeKit</summary>
+
 [MimeKit](https://mimekit.net/) es una biblioteca de correo electrónico de código abierto para .NET. Proporciona una API fácil de usar para enviar y recibir correos electrónicos utilizando el protocolo SMTP
+
 </details>
 
 <details>
 <summary>Quest Pdf</summary>
+
 [QuestPDF](https://www.questpdf.com/) es una biblioteca de .NET que te permite generar documentos PDF utilizando C#. Podés agregarle texto, imágenes, gráficos y otros elementos, y es ideal para crearlo dinamicamente.
+
 </details>
 
 
