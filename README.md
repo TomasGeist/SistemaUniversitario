@@ -12,11 +12,12 @@ Se desarrolla un sistema que permite gestionar una Universidad. Va a contemplar 
 ## Bibliotecas externas utilizadas
 <details>
 <summary>MimeKit</summary>
-[**MimeKit**](https://mimekit.net/) es una biblioteca de correo electrónico de código abierto para .NET. Proporciona una API fácil de usar para enviar y recibir correos electrónicos utilizando el protocolo SMTP
+[MimeKit](https://mimekit.net/) es una biblioteca de correo electrónico de código abierto para .NET. Proporciona una API fácil de usar para enviar y recibir correos electrónicos utilizando el protocolo SMTP
 </details>
 
+<details>
 <summary>Quest Pdf</summary>
-[**QuestPDF**](https://www.questpdf.com/) es una biblioteca de .NET que te permite generar documentos PDF utilizando C#. Podés agregarle texto, imágenes, gráficos y otros elementos, y es ideal para crearlo dinamicamente.
+[QuestPDF](https://www.questpdf.com/) es una biblioteca de .NET que te permite generar documentos PDF utilizando C#. Podés agregarle texto, imágenes, gráficos y otros elementos, y es ideal para crearlo dinamicamente.
 </details>
 
 
@@ -48,14 +49,14 @@ builder.Attachments.Add("ComprobanteCuota.pdf", pdf.ToArray());
 
 email.Body = builder.ToMessageBody();
 ```
-1- Se instancia un objeto MimeMessage para representar el correo electrónico.
-2- Se añade la dirección de correo del remitente obtenida de la configuración.
-3- Se añade la dirección del destinatario especificada en correo.Para.
-4- Se establece el asunto del correo como correo.Asunto.
-5- Se crea un constructor de cuerpo (BodyBuilder) para construir el cuerpo del correo.
-6- Se establece el cuerpo del correo en formato HTML usando el contenido proporcionado en correo.Contenido.
-7- Se adjunta un archivo PDF llamado "ComprobanteCuota.pdf" utilizando los datos de pdf.ToArray().
-8- Se establece el cuerpo del correo electrónico utilizando el constructor de cuerpo.
+1. Se instancia un objeto MimeMessage para representar el correo electrónico.
+2. Se añade la dirección de correo del remitente obtenida de la configuración.
+3. Se añade la dirección del destinatario especificada en correo.Para.
+4. Se establece el asunto del correo como correo.Asunto.
+5. Se crea un constructor de cuerpo (BodyBuilder) para construir el cuerpo del correo.
+6. Se establece el cuerpo del correo en formato HTML usando el contenido proporcionado en correo.Contenido.
+7. Se adjunta un archivo PDF llamado "ComprobanteCuota.pdf" utilizando los datos de pdf.ToArray().
+8. Se establece el cuerpo del correo electrónico utilizando el constructor de cuerpo.
 >***El protocolo SMTP corre sobre el puerto 587***
 - Para más información: [Mimekit docs](https://mimekit.net/docs/html/Introduction.html) 
 
