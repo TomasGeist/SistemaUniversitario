@@ -11,10 +11,10 @@ namespace WSSistemaUniversitario.Controllers.Alumnos
     [ApiController]
     public class AlumnoController : Controller
     {
-        private readonly AlumnoService _alumno;
+        private readonly IAlumnoService _alumno;
         private readonly Verificaciones _verificaciones;
         private readonly EnviarEmailController _enviarEmail;
-        public AlumnoController(AlumnoService alumno, CambioDeCondicionAlumnoDTO dtoCambioCondicion, Verificaciones verificaciones, EnviarEmailController enviarEmail)
+        public AlumnoController(IAlumnoService alumno, Verificaciones verificaciones, EnviarEmailController enviarEmail)
         {
             _alumno = alumno;
             _verificaciones = verificaciones;

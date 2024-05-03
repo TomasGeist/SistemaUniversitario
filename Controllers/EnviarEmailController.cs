@@ -11,10 +11,10 @@ namespace WSSistemaUniversitario.Controllers
    
     public class EnviarEmailController : ControllerBase
     {
-        private readonly EmailService _email;
-        private readonly PdfPagoService _pdfPagoService;
+        private readonly IEmailService _email;
+        private readonly IPdfPagoService _pdfPagoService;
 
-        public EnviarEmailController(EmailService email, PdfPagoService pdfPagoService)
+        public EnviarEmailController(IEmailService email, IPdfPagoService pdfPagoService)
         {
             _email = email;
             _pdfPagoService = pdfPagoService;
